@@ -1,47 +1,31 @@
-class Solution {
-public:
-    vector<int> twoSum(vector<int>& nums, int target) 
-    {
-        int n=nums.size();
-        vector<int> ans;
+#include <bits/stdc++.h>
 
-        map<int,int> mp;
-        map<int,int> mp1;
-        for(int i=0;i<n;i++)
-        {
-           mp.insert({nums[i],i+1});
-        }
+vector<vector<int>> pairSum(vector<int> &arr, int s)
+{
+   // Write your code here.
+      unordered_map<int,int> mp;
+      vector<vector<int>>ans;
+      int n=arr.size();
+     
+      for(int i=0;i<n;i++)
+      {
+         int target=s-arr[i];
+         if(mp.find(target)!=mp.end())
+         {
+            int mini=min(target,arr[i]);
+            int maxi=max(arr[i],target);
 
-         for(int i=n-1;i>=0;i--)
-        {
-           mp1.insert({nums[i],i+1});
-        }
-
-        for(int i=0;i<n;i++)
-        {
-            if(mp[target-nums[i]]>0)
+            for(int i=0;i<mp[target];i++)
             {
-                if(mp[target-nums[i]]!=mp[nums[i]])
-                {
-                   ans.push_back(mp[nums[i]]-1);
-                   ans.push_back(mp[target-nums[i]]-1);
-                   break;
-                }
-
-                else
-                {
-                    if(mp1[target-nums[i]]!=mp[target-nums[i]])
-                    {
-                     ans.push_back(mp[nums[i]]-1);
-                   ans.push_back(mp1[target-nums[i]]-1);
-                  
-                  
-                   break;
-                    }
-                }
+               ans.push_back({mini,maxi});
             }
-        }
+         }
 
-        return ans;
-    }
-};
+         mp[arr[i]]++;
+      }
+
+      sort(ans.begin(),ans.end());
+
+      return ans;
+
+}
